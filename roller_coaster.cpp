@@ -9,36 +9,38 @@ using namespace std;
 
 int main()
 {
-    int kAttrCapacity;
-    int kRides;
-    int N;
-    cin >> kAttrCapacity >> kRides >> N; cin.ignore();
-//    cerr <<
+    int attr_capacity;
+    int rides_count;
+    int groups_count;
+    cin >> attr_capacity >> rides_count >> groups_count; cin.ignore();
+    cerr << "capacity : " << attr_capacity << "\nrides: " << rides_count << "\n#groups" << groups_count << endl;
 
-    list<int> persons;
-
-    for (int i = 0; i < N; i++) {
+    vector<int> groups(groups_count);
+    int curr_lead_group = 0;
+    cerr << "groups: [";
+    for (int i = 0; i < groups_count; i++) {
         int Pi;
         cin >> Pi; cin.ignore();
-        cerr << Pi << " ";
-        cerr << endl;
+        cerr << "\t" << Pi << ", ";
 
-        persons.push_back(Pi);
+        groups.push_back(Pi);
     }
+    cerr << "]\n";
 
     long days_cash = 0;
-    for (int i = 0; i < kRides; ++i) {
+    for (int i = 0; i < rides_count; ++i) {
 
-        auto it = persons.begin();
-        int places_left = kAttrCapacity;
-        while (*it <= places_left) {
-            int group_count = *it;
+        int places_left = attr_capacity;
+        int queue_start_index = curr_lead_group;
+        bool people_left = true;
+        while (places_left >= groups.at(curr_lead_group) && people_left) {
 
-            days_cash += group_count;
-            places_left -= group_count;
+            days_cash += groups.at(curr_lead_group);
+            places_left -= groups.at(curr_lead_group);
 
-            it = persons.erase(it);
-            persons.push_back(group_count);
+            curr_lead_group = curr_lead_group < groups.size() - 1 ?
+                              curr_lead_group + 1 : 0;
+            people_left = curr_lead_group != queue_start_index;
         }
     }
 
