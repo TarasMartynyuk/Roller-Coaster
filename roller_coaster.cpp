@@ -38,10 +38,6 @@ int main()
 {
     //region input
 
-//    stringstream cin;
-//    cin << "3 3 4\n"
-//          "3 1 1 2\n";
-
     int attr_capacity;
     int rides_count;
     int groups_count;
