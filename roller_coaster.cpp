@@ -2,26 +2,46 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <queue>
+#include <list>
 
 using namespace std;
 
-/**
- * Auto-generated code below aims at helping you parse
- * the standard input according to the problem statement.
- **/
 int main()
 {
-    int L;
-    int C;
+    int kAttrCapacity;
+    int kRides;
     int N;
-    cin >> L >> C >> N; cin.ignore();
+    cin >> kAttrCapacity >> kRides >> N; cin.ignore();
+//    cerr <<
+
+    list<int> persons;
+
     for (int i = 0; i < N; i++) {
         int Pi;
         cin >> Pi; cin.ignore();
+        cerr << Pi << " ";
+        cerr << endl;
+
+        persons.push_back(Pi);
     }
 
-    // Write an action using cout. DON'T FORGET THE "<< endl"
-    // To debug: cerr << "Debug messages..." << endl;
+    long days_cash = 0;
+    for (int i = 0; i < kRides; ++i) {
 
-    cout << "answer" << endl;
+        auto it = persons.begin();
+        int places_left = kAttrCapacity;
+        while (*it <= places_left) {
+            int group_count = *it;
+
+            days_cash += group_count;
+            places_left -= group_count;
+
+            it = persons.erase(it);
+            persons.push_back(group_count);
+        }
+    }
+
+
+    cout << days_cash << endl;
 }
